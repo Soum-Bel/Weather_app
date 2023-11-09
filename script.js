@@ -1,12 +1,14 @@
 const container = document.querySelector(".container");
 const search = document.querySelector(".search-box button");
+const inputCity = document.querySelector("#location");
 const weatherBox = document.querySelector(".weather-box");
 const weatherDetails = document.querySelector(".weather-details");
 
-search.addEventListener('click', () => {
+const fetchWeather = () => {
     
     const APIKey = '0472fbb1d12416518d0e4361e8da41f9';
-    const city = document.querySelector("#location").value;
+    const city = inputCity.value; 
+    
 
     if (city === '') return;
 
@@ -53,4 +55,14 @@ search.addEventListener('click', () => {
         wind.innerHTML = `${parseInt(json.wind.speed)} Km/h`;
     })
     .catch(error => console.error('Error:', error));
+};
+    search.addEventListener('click', fetchWeather);
+    inputCity.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter') {
+        fetchWeather();
+    }
 });
+
+
+
+
