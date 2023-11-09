@@ -1,3 +1,4 @@
+// Sélection des éléments DOM 
 const container = document.querySelector(".container");
 const search = document.querySelector(".search-box button");
 const inputCity = document.querySelector("#location");
@@ -5,61 +6,63 @@ const weatherBox = document.querySelector(".weather-box");
 const weatherDetails = document.querySelector(".weather-details");
 const error404 = document.querySelector(".not-found");
 
-
+// Fonction pour cacher les éléments de l'interface utilisateur affichant les résultats météo et les messages d'erreur.
 const resetDisplay = () => {
-    // Cette fonction masque les sections qui ne devraient être visibles qu'après une recherche réussie ou en cas d'erreur.
+    // Retire la classe 'active' pour rendre les éléments invisibles 
     weatherBox.classList.remove('active');
     weatherDetails.classList.remove('active');
     error404.classList.remove('active');
-    container.style.height = '400px'; // Hauteur par défaut ou hauteur pour l'état d'erreur
+    container.style.height = '400px';
 };
 
-const fetchWeather = () => {
+// Fonction pour récuperer les données météo à partir de l'API 
+    const fetchWeather = () => {
+    
     resetDisplay();
-    console.log("Fetch weather called."); // Pour tester le déclenchement de la fonction
-    const APIKey = '0472fbb1d12416518d0e4361e8da41f9';
-    const city = inputCity.value;
-    console.log(`City entered: ${city}`); // Pour voir la ville saisie par l'utilisateur
 
+    
+    const APIKey = '0472fbb1d12416518d0e4361e8da41f9';
+    // Récupère la valeur saisie par l'utilisateur.
+    const city = inputCity.value;
+    
+    // Si aucune ville n'est entrée, la fonction se termine et enregistre un message dans la console.
     if (city === '') {
         console.log("No city entered.");
         return;
     }
 
+    // Envoie une requête à l'API OpenWeatherMap avec la ville entrée par l'utilisateur.
     fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${APIKey}`)
     .then(response => {
-        console.log(`Response received. Status code: ${response.status}`); // Pour voir le code de statut de la réponse
+        // Vérifie le succès de la réponse HTTP.
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
+        // Convertit la réponse en JSON.
         return response.json();
     })
     .then(json => {
-        console.log("JSON response received:", json); // Pour inspecter la réponse JSON
-        
-        // Vérifiez le code de réponse contenu dans le JSON, pas le code de statut de la réponse HTTP
+        // Vérifie si la réponse JSON indique que la ville n'a pas été trouvée.
         if (json.cod !== 200) {
-            console.log("City not found."); // Si la ville n'est pas trouvée
             container.style.height ='400px';
-            weatherBox.classList.remove('active');
-            weatherDetails.classList.remove('active');
             error404.classList.add('active');
             return;
         }
 
-        console.log("City found, updating weather details."); // Si la ville est trouvée et que les détails météo sont mis à jour
+        // Ajuste l'interface utilisateur pour afficher les résultats météo.
         container.style.height ='555px';
         weatherBox.classList.add('active');
         weatherDetails.classList.add('active');
         error404.classList.remove('active');
 
-        // Mise à jour des détails météorologiques
+        //  Afficher les détails météo
         const image = document.querySelector(".weather-box img");
         const temperature = document.querySelector(".weather-box .temperature");
         const description = document.querySelector(".weather-box .description");
         const humidity = document.querySelector(".weather-details .info-humidity span");
         const wind = document.querySelector(".weather-details .info-wind span");
 
+        // Mise à jour des informations météo
         switch (json.weather[0].main) {
             case 'Clear':
                 image.src = '/images/clear.png';
@@ -81,29 +84,26 @@ const fetchWeather = () => {
                 image.src = '/images/cloud.png';
         }
 
-        console.log(`Weather condition: ${json.weather[0].main}`); // Pour voir la condition météorologique
-
+        // Insère les données météo dans les éléments HTML sélectionnés.
         temperature.innerHTML = `${parseInt(json.main.temp)}<span>°C</span>`;
         description.innerHTML = json.weather[0].description;
         humidity.innerHTML = `${json.main.humidity}%`;
         wind.innerHTML = `${parseInt(json.wind.speed)} Km/h`;
-
-        console.log(`Updated temperature: ${json.main.temp}°C`); // Pour voir la température mise à jour
-        console.log(`Updated description: ${json.weather[0].description}`); // Pour voir la description mise à jour
-        console.log(`Updated humidity: ${json.main.humidity}%`); // Pour voir l'humidité mise à jour
-        console.log(`Updated wind speed: ${json.wind.speed} Km/h`); // Pour voir la vitesse du vent mise à jour
     })
     .catch(error => {
-        console.error('Fetch error:', error); // Pour attraper les erreurs lors de l'appel fetch
-        // Affichez un message d'erreur si l'erreur est due à un problème de réseau ou de serveur
+        // Attrape et traite les erreurs de la requête fetch.
+        console.error('Fetch error:', error);
+        // Affiche un message d'erreur 
         error404.classList.add('active');
     });
 };
 
+// Ajoute un écouteur d'événements pour déclencher la recherche météo lors d'un clic sur le bouton.
 search.addEventListener('click', fetchWeather);
+
+// Ajoute un écouteur d'événements pour déclencher la recherche météo lorsque l'utilisateur appuie sur 'Entrée'
 inputCity.addEventListener('keydown', (event) => {
     if (event.key === 'Enter') {
-        console.log("Enter key pressed."); // Pour vérifier si la touche Enter a été pressée
         fetchWeather();
     }
 });
