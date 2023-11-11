@@ -2,7 +2,7 @@
 
 ## Introduction
 Weather App est une application web qui affiche les informations météorologiques pour les utilisateurs. 
-Elle intègre des données en temps réel via une API météo externe et les présente dans une interface utilisateur conviviale.
+Elle intègre des données en temps réel via une API météo externe et les présente sur une interface.
 
 ## Fonctionnalités
 - Affichage de la météo actuelle d'une ville par défaut.
