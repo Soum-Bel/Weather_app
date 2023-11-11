@@ -10,19 +10,13 @@
 <body>
 
     <div class="container">
-        <div class="search-box">
-            <i class="bx bxs-map"></i>
-            <input type="text" placeholder="Nom de ville" id="location" name="location">
-            <button class="bx bx-search" ></button>
-
-        </div>
-
         <div class="weather-box">
             <div class="box">
                 <div class="info-weather">
+                    <div class="city-name"></div>
                     <div class="weather">
                         <img src="./images/cloud.png"> 
-                        <p class="temperature">0<span>°C</span> </p>
+                        <p class="temperature">0<span>°C</span></p>
                         <p class="description">Nuageux</p>
                     </div>
                 </div>
@@ -53,14 +47,13 @@
 
         <div class="not-found">
             <div class="box">
-                <img src="images/404.png" >
+                <img src="./images/404.png" >
                 <p>Oops, la localisation n'a pas été retrouvée</p>
             </div>
         </div>
     </div>
 
-
-    <script src="script.js"></script>
+    <script src="meteo.js"></script>
 
 </body>
 </html>
