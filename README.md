@@ -13,7 +13,7 @@ Elle intègre des données en temps réel via une API météo externe et les pr�
 - HTML
 - CSS
 - JavaScript
-- OpenWeatherMap API
+- API OpenWeatherMap pour les données météorologiques
 
 ## Configuration
 Pour configurer l'application avec votre propre clé API et ville par défaut, modifiez le fichier `conf.json`.
