@@ -38,11 +38,11 @@ const loadConfig = () => {
         error404.classList.remove('active');
         error404.style.display = 'none'; 
 
-        // Sélectionne l'élément pour le nom de la ville et mettez à jour son contenu
+        // Sélectionne l'élément pour le nom de la ville et mets à jour son contenu
         const cityName = document.querySelector(".city-name");
         cityName.textContent = city; // 
 
-        // Afficher les détails météo
+        // Affiche les détails météo
         const image = document.querySelector(".weather-box img");
         const temperature = document.querySelector(".weather-box .temperature");
         const description = document.querySelector(".weather-box .description");
@@ -50,7 +50,7 @@ const loadConfig = () => {
         const wind = document.querySelector(".weather-details .info-wind span");
 
        
-        // Mise à jour des informations météo en fonction des données reçues
+        // Mets à jour les informations météo en fonction des données reçues
         switch (json.weather[0].main) {
             case 'Clear':
                 image.src = '/images/clear.png';
@@ -84,9 +84,9 @@ const loadConfig = () => {
         
     })
     .catch(error => {
-        error404.style.display = 'block'; // Show error message
-        weatherBox.style.display = 'none'; // Hide weather box
-        weatherDetails.style.display = 'none'; // Hide weather details
+        error404.style.display = 'block'; 
+        weatherBox.style.display = 'none'; 
+        weatherDetails.style.display = 'none';
     });
 };
 
